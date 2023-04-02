@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:peaceinapod/podcastindex/models/podcast.dart';
 import 'package:peaceinapod/providers/podcastindex.provider.dart';
+import 'package:peaceinapod/widgets/image.dart';
 import 'package:provider/provider.dart';
 
 class PodcastDetailsWidget extends StatelessWidget {
@@ -15,6 +15,14 @@ class PodcastDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double imageSize = min(
+      300,
+      min(
+        MediaQuery.of(context).size.width,
+        MediaQuery.of(context).size.height / 2,
+      ),
+    );
+    print(MediaQuery.of(context).size.width);
     return Consumer<PIndexProvider>(
       builder: (context, provider, child) {
         bool subscribed =
@@ -39,20 +47,14 @@ class PodcastDetailsWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12.0),
-                Hero(
-                  tag: "podcast_image_${podcast.id}",
-                  child: CachedNetworkImage(
-                    imageUrl: podcast.artwork,
-                    width: min(
-                      MediaQuery.of(context).size.width,
-                      MediaQuery.of(context).size.height / 2,
-                    ),
-                    fadeInDuration: imageFadeDuration,
-                    errorWidget: (context, url, error) => Container(
-                      color: Colors.black.withOpacity(0.9),
-                      width: MediaQuery.of(context).size.width / 2,
-                      height: MediaQuery.of(context).size.width / 2,
-                    ),
+                PodNetworkImage(
+                  url: podcast.artwork,
+                  // width: imageSize,
+                  height: imageSize,
+                  errorWidget: Container(
+                    color: Colors.black.withOpacity(0.9),
+                    width: imageSize,
+                    height: imageSize,
                   ),
                 ),
                 const SizedBox(height: 12.0),

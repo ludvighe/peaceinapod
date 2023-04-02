@@ -10,6 +10,13 @@
       "type": "dart"
     },
     {
+      "name": "Flutter - Web HTML",
+      "type": "dart",
+      "request": "launch",
+      "program": "lib/main.dart",
+      "args": ["-d", "chrome", "--web-renderer", "html"]
+    },
+    {
       "name": "peaceinapod (profile mode)",
       "request": "launch",
       "type": "dart",

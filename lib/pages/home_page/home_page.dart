@@ -8,6 +8,7 @@ import 'package:peaceinapod/podcastindex/models/podcast.dart';
 import 'package:peaceinapod/providers/audioplayer.provider.dart';
 import 'package:peaceinapod/providers/podcastindex.provider.dart';
 import 'package:peaceinapod/providers/settings.provider.dart';
+import 'package:peaceinapod/widgets/image.dart';
 import 'package:peaceinapod/widgets/podcast_card.dart';
 import 'package:peaceinapod/widgets/podcast_details_widget.dart';
 import 'package:peaceinapod/widgets/podcast_episodes_widget.dart';
@@ -333,22 +334,20 @@ class _HomePageState extends State<HomePage> {
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(18.0),
       ),
-      child: CachedNetworkImage(
-        imageUrl: playerProvider.episode!.image,
+      child: PodNetworkImage(
+        url: playerProvider.episode!.image,
         height: 70,
         width: 70,
-        errorWidget: (context, url, error) {
-          return CachedNetworkImage(
-            imageUrl: playerProvider.episode!.feedImage,
-            height: 70,
-            width: 70,
-            errorWidget: (context, url, error) => const Icon(
-              Icons.podcasts,
-              size: 60,
-              color: Colors.grey,
-            ),
-          );
-        },
+        errorWidget: CachedNetworkImage(
+          imageUrl: playerProvider.episode!.feedImage,
+          height: 70,
+          width: 70,
+          errorWidget: (context, url, error) => const Icon(
+            Icons.podcasts,
+            size: 60,
+            color: Colors.grey,
+          ),
+        ),
       ),
     );
   }

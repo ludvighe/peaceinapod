@@ -17,23 +17,26 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (context) => SettingsProvider()),
     ChangeNotifierProvider(create: (context) => PIndexProvider()),
     ChangeNotifierProvider(create: (context) => AudioPlayerProvider()),
-  ], child: const MyApp()));
+  ], child: const PeaceinapodApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class PeaceinapodApp extends StatelessWidget {
+  const PeaceinapodApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return YaruTheme(
         data: const YaruThemeData(
-            variant: YaruVariant.olive, themeMode: ThemeMode.dark),
+          variant: YaruVariant.olive,
+          themeMode: ThemeMode.dark,
+        ),
         builder: (context, yaru, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: yaru.theme,
             darkTheme: yaru.darkTheme,
+            themeMode: ThemeMode.dark,
             home: const Scaffold(
               body: StartPage(),
             ),

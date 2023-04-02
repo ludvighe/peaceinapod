@@ -2,6 +2,7 @@ import "package:cached_network_image/cached_network_image.dart";
 import "package:flutter/material.dart";
 import 'package:peaceinapod/podcastindex/models/podcast.dart';
 import "package:peaceinapod/providers/podcastindex.provider.dart";
+import "package:peaceinapod/widgets/image.dart";
 import "package:peaceinapod/widgets/podcast_details_widget.dart";
 import "package:peaceinapod/widgets/podcast_episodes_widget.dart";
 
@@ -17,7 +18,6 @@ class PodcastCard extends StatelessWidget {
   final Function()? onLongPress;
 
   final Size imageSize = const Size(60, 60);
-  final Duration imageFadeDuration = const Duration(milliseconds: 150);
 
   final PodcastCardMode mode;
 
@@ -65,12 +65,11 @@ class PodcastCard extends StatelessWidget {
             children: [
               Hero(
                 tag: "podcast_image_${podcast.id}",
-                child: CachedNetworkImage(
-                  imageUrl: podcast.artwork,
+                child: PodNetworkImage(
+                  url: podcast.artwork,
                   height: imageSize.height,
                   width: imageSize.width,
-                  fadeInDuration: imageFadeDuration,
-                  errorWidget: (context, url, error) => Icon(
+                  errorWidget: Icon(
                     Icons.podcasts,
                     size: imageSize.width,
                     color: Colors.grey,
