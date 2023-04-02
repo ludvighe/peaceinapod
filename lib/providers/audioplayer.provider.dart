@@ -15,6 +15,13 @@ class AudioPlayerProvider extends ChangeNotifier {
 
   Timer? playingListener;
 
+  AudioPlayerProvider() {
+    player.playerStateStream.listen((state) {
+      playing = state.playing;
+      notifyListeners();
+    });
+  }
+
   Future<void> playEpisode(Episode value) async {
     bool shouldLoadUrl = value.id != _episode?.id;
 

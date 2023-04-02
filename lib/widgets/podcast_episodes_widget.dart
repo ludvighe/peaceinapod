@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:peaceinapod/constants/colors.dart';
 import 'package:peaceinapod/podcastindex/models/episode.dart';
 import 'package:peaceinapod/podcastindex/models/podcast.dart';
 import 'package:peaceinapod/providers/audioplayer.provider.dart';
@@ -23,27 +22,27 @@ class PodcastEpisodesWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                  ),
-                  onPressed: () => Navigator.pop(context),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.arrow_back),
-                      const SizedBox(
-                        width: 24,
-                      ),
-                      Expanded(
-                        child: Text(
-                          podcast.title,
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // ElevatedButton(
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: Colors.transparent,
+                //   ),
+                //   onPressed: () => Navigator.pop(context),
+                //   child: Row(
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: [
+                //       const Icon(Icons.arrow_back),
+                //       const SizedBox(
+                //         width: 24,
+                //       ),
+                //       Expanded(
+                //         child: Text(
+                //           podcast.title,
+                //           style: Theme.of(context).textTheme.bodyLarge,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 // if (provider.loading) const LinearProgressIndicator(),
                 const SizedBox(height: 12.0),
                 Expanded(

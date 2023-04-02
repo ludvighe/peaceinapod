@@ -13,14 +13,22 @@ enum PodcastCardMode {
 class PodcastCard extends StatelessWidget {
   final PIndexProvider provider;
   final Podcast podcast;
+  final Function()? onTap;
+  final Function()? onLongPress;
 
   final Size imageSize = const Size(60, 60);
   final Duration imageFadeDuration = const Duration(milliseconds: 150);
 
   final PodcastCardMode mode;
 
-  const PodcastCard(this.provider, this.podcast,
-      {super.key, this.mode = PodcastCardMode.preferAbout});
+  const PodcastCard(
+    this.provider,
+    this.podcast, {
+    super.key,
+    this.mode = PodcastCardMode.preferAbout,
+    this.onTap,
+    this.onLongPress,
+  });
 
   void openAbout(BuildContext context) {
     showDialog(
@@ -42,12 +50,14 @@ class PodcastCard extends StatelessWidget {
       elevation: 5,
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
-        onTap: mode == PodcastCardMode.preferAbout
-            ? () => openAbout(context)
-            : () => openEpisodes(context),
-        onLongPress: mode == PodcastCardMode.preferAbout
-            ? () => openEpisodes(context)
-            : () => openAbout(context),
+        onTap: onTap ??
+            (mode == PodcastCardMode.preferAbout
+                ? () => openAbout(context)
+                : () => openEpisodes(context)),
+        onLongPress: onLongPress ??
+            (mode == PodcastCardMode.preferAbout
+                ? () => openEpisodes(context)
+                : () => openAbout(context)),
         child: Container(
           padding: const EdgeInsets.all(12),
           child: Row(

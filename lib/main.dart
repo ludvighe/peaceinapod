@@ -3,6 +3,7 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:peaceinapod/pages/start_page/start_page.dart';
 import 'package:peaceinapod/providers/audioplayer.provider.dart';
 import 'package:peaceinapod/providers/podcastindex.provider.dart';
+import 'package:peaceinapod/providers/settings.provider.dart';
 import 'package:provider/provider.dart';
 import 'package:yaru/yaru.dart';
 
@@ -13,8 +14,9 @@ Future<void> main() async {
     androidNotificationOngoing: true,
   );
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => SettingsProvider()),
     ChangeNotifierProvider(create: (context) => PIndexProvider()),
-    ChangeNotifierProvider(create: (context) => AudioPlayerProvider())
+    ChangeNotifierProvider(create: (context) => AudioPlayerProvider()),
   ], child: const MyApp()));
 }
 
