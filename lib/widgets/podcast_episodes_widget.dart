@@ -8,47 +8,82 @@ import 'package:peaceinapod/providers/podcastindex.provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PodcastEpisodesWidget extends StatelessWidget {
+class PodcastEpisodesWidget extends StatefulWidget {
   final Podcast podcast;
   const PodcastEpisodesWidget(this.podcast, {super.key});
+
+  @override
+  State<PodcastEpisodesWidget> createState() => _PodcastEpisodesWidgetState();
+}
+
+class _PodcastEpisodesWidgetState extends State<PodcastEpisodesWidget> {
+  late TextEditingController _searchController;
+  bool _sortDate = true;
+
+  bool _searchFilter(Episode episode) {
+    if (_searchController.text == "") return true;
+    String lowerTitle = episode.title.toLowerCase();
+    return lowerTitle.contains(_searchController.text.toLowerCase());
+  }
+
+  int _dateSort(Episode a, Episode b) {
+    if (_sortDate) {
+      return a.datePublished < b.datePublished ? 1 : -1;
+    }
+    return a.datePublished > b.datePublished ? 1 : -1;
+  }
+
+  @override
+  void initState() {
+    _searchController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) => Consumer<PIndexProvider>(
         builder: (context, provider, child) {
           List<Episode> episodes = provider.episodes
-              .where((element) => element.feedId == podcast.id)
-              .toList();
+              .where((element) => element.feedId == widget.podcast.id)
+              .where(_searchFilter)
+              .toList()
+            ..sort(_dateSort);
+
           return Card(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // ElevatedButton(
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: Colors.transparent,
-                //   ),
-                //   onPressed: () => Navigator.pop(context),
-                //   child: Row(
-                //     crossAxisAlignment: CrossAxisAlignment.center,
-                //     children: [
-                //       const Icon(Icons.arrow_back),
-                //       const SizedBox(
-                //         width: 24,
-                //       ),
-                //       Expanded(
-                //         child: Text(
-                //           podcast.title,
-                //           style: Theme.of(context).textTheme.bodyLarge,
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                // if (provider.loading) const LinearProgressIndicator(),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        style: const TextStyle(fontSize: 12),
+                        controller: _searchController,
+                        textInputAction: TextInputAction.search,
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _sortDate = !_sortDate;
+                          });
+                        },
+                        icon: const Icon(Icons.sort))
+                  ],
+                ),
                 const SizedBox(height: 12.0),
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: () async {
-                      await provider.searchEpisodes(podcast);
+                      await provider.searchEpisodes(widget.podcast);
                     },
                     child: ListView(
                       children: episodes.isEmpty
