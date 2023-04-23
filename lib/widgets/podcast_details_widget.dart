@@ -18,11 +18,10 @@ class PodcastDetailsWidget extends StatelessWidget {
     double imageSize = min(
       300,
       min(
-        MediaQuery.of(context).size.width,
-        MediaQuery.of(context).size.height / 2,
+        MediaQuery.of(context).size.width / 2,
+        MediaQuery.of(context).size.height / 3,
       ),
     );
-    print(MediaQuery.of(context).size.width);
     return Consumer<PIndexProvider>(
       builder: (context, provider, child) {
         bool subscribed =
@@ -47,14 +46,20 @@ class PodcastDetailsWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12.0),
-                PodNetworkImage(
-                  url: podcast.artwork,
-                  // width: imageSize,
-                  height: imageSize,
-                  errorWidget: Container(
-                    color: Colors.black.withOpacity(0.9),
-                    width: imageSize,
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xAA000000),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: PodNetworkImage(
+                    url: podcast.artwork,
+                    // width: imageSize,
                     height: imageSize,
+                    errorWidget: Container(
+                      color: Colors.black.withOpacity(0.9),
+                      width: imageSize,
+                      height: imageSize,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 12.0),

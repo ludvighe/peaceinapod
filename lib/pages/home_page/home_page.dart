@@ -98,7 +98,23 @@ class _HomePageState extends State<HomePage> {
                 },
                 icon: const Icon(Icons.search))
           ],
-          title: const Text("Podcasts"),
+          title: Row(
+            children: const [
+              // Provider.of<AudioPlayerProvider>(context).playing
+              //     ? Image.asset(
+              //         "assets/peaceinapod-l-pea.png",
+              //         width: 25,
+              //         height: 25,
+              //       )
+              //     : Image.asset(
+              //         "assets/peaceinapod-r-pea.png",
+              //         width: 25,
+              //         height: 25,
+              //       ),
+              // const SizedBox(width: 12),
+              Text("Podcasts"),
+            ],
+          ),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
